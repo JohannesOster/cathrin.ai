@@ -6,7 +6,7 @@ const TIME_COL_WIDTH = 64; // --grid-time-col-width
 const HEADER_HEIGHT = 34; // --grid-header-height
 const MONTH_LABEL_HEIGHT = 36;
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
-const WEEKDAY_NAMES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const WEEKDAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // Cathrin palette (from color-mapping.ts)
 const C = {
@@ -38,13 +38,14 @@ const T = {
 // ─── Date helpers ───────────────────────────────────────────────────────────
 function getWeekDays(): Date[] {
   const today = new Date();
-  const day = today.getDay(); // 0=Sun
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((day + 6) % 7));
-  monday.setHours(0, 0, 0, 0);
+  // Always place today at index 2 (third column) so it's visible
+  // despite the calendar extending off the right edge
+  const start = new Date(today);
+  start.setDate(today.getDate() - 2);
+  start.setHours(0, 0, 0, 0);
   return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
     return d;
   });
 }
@@ -68,7 +69,9 @@ function formatHour(hour: number): string {
 function formatTime(hour: number, minute: number): string {
   const h = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
   const period = hour >= 12 ? "PM" : "AM";
-  return minute === 0 ? `${h} ${period}` : `${h}:${minute.toString().padStart(2, "0")} ${period}`;
+  return minute === 0
+    ? `${h} ${period}`
+    : `${h}:${minute.toString().padStart(2, "0")} ${period}`;
 }
 
 // ─── Dummy events ───────────────────────────────────────────────────────────
@@ -83,33 +86,180 @@ interface DummyEvent {
 
 const DUMMY_EVENTS: DummyEvent[] = [
   // Monday
-  { dayIndex: 0, startHour: 9, startMin: 0, durationMin: 60, title: "Standup", color: C.sky },
-  { dayIndex: 0, startHour: 11, startMin: 0, durationMin: 90, title: "Design review", color: C.lavender },
-  { dayIndex: 0, startHour: 14, startMin: 0, durationMin: 60, title: "1:1 with Sarah", color: C.teal },
+  {
+    dayIndex: 0,
+    startHour: 9,
+    startMin: 0,
+    durationMin: 45,
+    title: "Pretend to be productive",
+    color: C.sky,
+  },
+  {
+    dayIndex: 0,
+    startHour: 11,
+    startMin: 0,
+    durationMin: 120,
+    title: "Stare at code until it works",
+    color: C.lavender,
+  },
+  {
+    dayIndex: 0,
+    startHour: 14,
+    startMin: 30,
+    durationMin: 60,
+    title: "Walk to kitchen, forget why",
+    color: C.teal,
+  },
   // Tuesday
-  { dayIndex: 1, startHour: 8, startMin: 30, durationMin: 60, title: "Morning run", color: C.sage },
-  { dayIndex: 1, startHour: 10, startMin: 0, durationMin: 120, title: "Deep work", color: C.slate },
-  { dayIndex: 1, startHour: 15, startMin: 0, durationMin: 90, title: "Product sync", color: C.sky },
+  {
+    dayIndex: 1,
+    startHour: 8,
+    startMin: 30,
+    durationMin: 60,
+    title: "Regret staying up late",
+    color: C.graphite,
+  },
+  {
+    dayIndex: 1,
+    startHour: 10,
+    startMin: 0,
+    durationMin: 90,
+    title: "Meeting that could've been an email 🤦",
+    color: C.coral,
+  },
+  {
+    dayIndex: 1,
+    startHour: 14,
+    startMin: 0,
+    durationMin: 120,
+    title: "Deep work (actually scrolling)",
+    color: C.slate,
+  },
   // Wednesday
-  { dayIndex: 2, startHour: 9, startMin: 30, durationMin: 45, title: "Team standup", color: C.sky },
-  { dayIndex: 2, startHour: 11, startMin: 0, durationMin: 60, title: "Lunch with Alex", color: C.terracotta },
-  { dayIndex: 2, startHour: 13, startMin: 30, durationMin: 120, title: "Workshop", color: C.plum },
-  { dayIndex: 2, startHour: 16, startMin: 0, durationMin: 60, title: "Coffee chat", color: C.amber },
+  {
+    dayIndex: 2,
+    startHour: 9,
+    startMin: 0,
+    durationMin: 60,
+    title: "Standup (sitting down)",
+    color: C.sky,
+  },
+  {
+    dayIndex: 2,
+    startHour: 11,
+    startMin: 30,
+    durationMin: 90,
+    title: "Slowly walk to lunch with a big smile",
+    color: C.terracotta,
+  },
+  {
+    dayIndex: 2,
+    startHour: 14,
+    startMin: 0,
+    durationMin: 120,
+    title: "Rename variables for 2 hours",
+    color: C.plum,
+  },
+  {
+    dayIndex: 2,
+    startHour: 16,
+    startMin: 30,
+    durationMin: 60,
+    title: "Do nothing",
+    color: C.amber,
+  },
   // Thursday
-  { dayIndex: 3, startHour: 9, startMin: 0, durationMin: 60, title: "Standup", color: C.sky },
-  { dayIndex: 3, startHour: 10, startMin: 30, durationMin: 90, title: "Client call", color: C.coral },
-  { dayIndex: 3, startHour: 13, startMin: 0, durationMin: 60, title: "Dentist", color: C.graphite },
-  { dayIndex: 3, startHour: 15, startMin: 30, durationMin: 90, title: "Code review", color: C.lavender },
+  {
+    dayIndex: 3,
+    startHour: 9,
+    startMin: 0,
+    durationMin: 45,
+    title: "Open laptop, close laptop",
+    color: C.sage,
+  },
+  {
+    dayIndex: 3,
+    startHour: 10,
+    startMin: 30,
+    durationMin: 90,
+    title: "Explain my job to my mom (again)",
+    color: C.coral,
+  },
+  {
+    dayIndex: 3,
+    startHour: 13,
+    startMin: 0,
+    durationMin: 60,
+    title: "Contemplate life choices",
+    color: C.graphite,
+  },
+  {
+    dayIndex: 3,
+    startHour: 15,
+    startMin: 0,
+    durationMin: 120,
+    title: "Google things I should already know",
+    color: C.lavender,
+  },
   // Friday
-  { dayIndex: 4, startHour: 9, startMin: 0, durationMin: 45, title: "Standup", color: C.sky },
-  { dayIndex: 4, startHour: 10, startMin: 0, durationMin: 120, title: "Focus time", color: C.teal },
-  { dayIndex: 4, startHour: 14, startMin: 0, durationMin: 60, title: "Retro", color: C.rose },
+  {
+    dayIndex: 4,
+    startHour: 9,
+    startMin: 0,
+    durationMin: 45,
+    title: "Arrive mentally checked out",
+    color: C.sky,
+  },
+  {
+    dayIndex: 4,
+    startHour: 10,
+    startMin: 30,
+    durationMin: 120,
+    title: "Pretend Friday is a real workday",
+    color: C.teal,
+  },
+  {
+    dayIndex: 4,
+    startHour: 14,
+    startMin: 0,
+    durationMin: 60,
+    title: "Deploy to prod, leave early",
+    color: C.rose,
+  },
   // Saturday
-  { dayIndex: 5, startHour: 10, startMin: 0, durationMin: 90, title: "Yoga", color: C.sage },
-  { dayIndex: 5, startHour: 13, startMin: 0, durationMin: 120, title: "Museum visit", color: C.terracotta },
+  {
+    dayIndex: 5,
+    startHour: 10,
+    startMin: 0,
+    durationMin: 90,
+    title: "Touch grass",
+    color: C.sage,
+  },
+  {
+    dayIndex: 5,
+    startHour: 14,
+    startMin: 0,
+    durationMin: 120,
+    title: "Nap but call it self-care",
+    color: C.terracotta,
+  },
   // Sunday
-  { dayIndex: 6, startHour: 11, startMin: 0, durationMin: 60, title: "Brunch", color: C.amber },
-  { dayIndex: 6, startHour: 15, startMin: 0, durationMin: 90, title: "Read & relax", color: C.slate },
+  {
+    dayIndex: 6,
+    startHour: 11,
+    startMin: 0,
+    durationMin: 90,
+    title: "Brunch as personality trait",
+    color: C.amber,
+  },
+  {
+    dayIndex: 6,
+    startHour: 15,
+    startMin: 0,
+    durationMin: 90,
+    title: "Sunday scaries",
+    color: C.slate,
+  },
 ];
 
 // ─── Selection state (one event at a time, like the real app) ───────────────
@@ -120,9 +270,21 @@ function EventChip(props: { event: DummyEvent; id: string }) {
   const [hovered, setHovered] = createSignal(false);
   const selected = () => selectedId() === props.id;
 
-  const top = () => (props.event.startHour + props.event.startMin / 60) * HOUR_HEIGHT;
-  const height = () => Math.max((props.event.durationMin / 60) * HOUR_HEIGHT - 4, 24);
-  const showTime = () => height() >= 28;
+  const TITLE_LINE_HEIGHT = 15;
+  const TIME_ROW_HEIGHT = 14;
+  const EVENT_PADDING_Y = 8; // top + bottom padding
+  const SINGLE_LINE_THRESHOLD = 28;
+  const SHORT_TIME_THRESHOLD = 32;
+
+  const top = () =>
+    (props.event.startHour + props.event.startMin / 60) * HOUR_HEIGHT;
+  const height = () =>
+    Math.max((props.event.durationMin / 60) * HOUR_HEIGHT - 4, 24);
+  const showTime = () => height() >= SINGLE_LINE_THRESHOLD;
+  const titleMaxLines = () => {
+    const titleArea = height() - EVENT_PADDING_Y - TIME_ROW_HEIGHT;
+    return Math.max(1, Math.floor(titleArea / TITLE_LINE_HEIGHT));
+  };
 
   const bg = () => {
     if (selected()) return props.event.color;
@@ -150,7 +312,9 @@ function EventChip(props: { event: DummyEvent; id: string }) {
         "background-color": bg(),
         color: fg(),
         "border-radius": "4px",
-        border: selected() ? "1px solid transparent" : `1px solid ${T.borderLight}`,
+        border: selected()
+          ? "1px solid transparent"
+          : `1px solid ${T.borderLight}`,
         overflow: "hidden",
         display: "flex",
         cursor: "pointer",
@@ -174,29 +338,56 @@ function EventChip(props: { event: DummyEvent; id: string }) {
         }}
       />
       {/* Content */}
-      <div style={{ padding: "3px 4px", "min-width": "0", flex: "1" }}>
-        <div
-          style={{
-            "font-size": "13px",
-            "font-weight": "500",
-            "line-height": "1.25",
-            "white-space": "nowrap",
-            overflow: "hidden",
-            "text-overflow": "ellipsis",
-          }}
+      <div style={{ padding: "4px 4px", "min-width": "0", flex: "1" }}>
+        <Show
+          when={showTime()}
+          fallback={
+            <div
+              style={{
+                "font-size": "13px",
+                "font-weight": "500",
+                "line-height": "1.15",
+                "white-space": "nowrap",
+                overflow: "hidden",
+                "text-overflow": "ellipsis",
+              }}
+            >
+              {props.event.title}
+            </div>
+          }
         >
-          {props.event.title}
-        </div>
-        <Show when={showTime()}>
+          <div
+            style={{
+              "font-size": "13px",
+              "font-weight": "500",
+              "line-height": `${TITLE_LINE_HEIGHT}px`,
+              overflow: "hidden",
+              display: "-webkit-box",
+              "-webkit-box-orient": "vertical",
+              "-webkit-line-clamp": titleMaxLines(),
+            }}
+          >
+            {props.event.title}
+          </div>
           <div
             style={{
               "font-size": "10px",
               "font-weight": "300",
               opacity: selected() ? "0.9" : "0.8",
               "margin-top": "2px",
+              "white-space": "nowrap",
             }}
           >
-            {formatTime(props.event.startHour, props.event.startMin)}
+            {(() => {
+              const start = formatTime(props.event.startHour, props.event.startMin);
+              if (height() < SHORT_TIME_THRESHOLD) return start;
+              const totalMin =
+                props.event.startHour * 60 +
+                props.event.startMin +
+                props.event.durationMin;
+              const end = formatTime(Math.floor(totalMin / 60) % 24, totalMin % 60);
+              return `${start} – ${end}`;
+            })()}
           </div>
         </Show>
       </div>
@@ -210,6 +401,37 @@ export default function CalendarPreview() {
   const days = getWeekDays();
 
   const [now, setNow] = createSignal(new Date());
+
+  // Dynamic event: "Sign up to cathrin 🔥" — always 1 min from now, 30 min long
+  const allEvents = () => {
+    const n = now();
+    const todayDayIdx = (n.getDay() + 6) % 7; // 0=Mon
+    let startMin = n.getMinutes() + 1;
+    let startHour = n.getHours() + Math.floor(startMin / 60);
+    startMin = startMin % 60;
+    if (startHour >= 24) startHour = 23; // clamp
+
+    const dynamic: DummyEvent = {
+      dayIndex: todayDayIdx,
+      startHour,
+      startMin,
+      durationMin: 60,
+      title: "Join cathrin.ai 🔥",
+      color: C.coral,
+    };
+
+    const dynStart = startHour * 60 + startMin;
+    const dynEnd = dynStart + dynamic.durationMin;
+
+    const filtered = DUMMY_EVENTS.filter((e) => {
+      if (e.dayIndex !== todayDayIdx) return true;
+      const eStart = e.startHour * 60 + e.startMin;
+      const eEnd = eStart + e.durationMin;
+      return eEnd <= dynStart || eStart >= dynEnd;
+    });
+
+    return [...filtered, dynamic];
+  };
 
   onMount(() => {
     // Scroll to current time area (2 hours before current hour), matching app behavior
@@ -361,7 +583,17 @@ export default function CalendarPreview() {
             "padding-right": "8px",
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={{ color: T.fgMuted }}>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style={{ color: T.fgMuted }}
+          >
             <path d="m7 15 5 5 5-5" />
             <path d="m7 9 5-5 5 5" />
           </svg>
@@ -369,7 +601,8 @@ export default function CalendarPreview() {
         <For each={days}>
           {(day, i) => {
             const dayIdx = () => (day.getDay() + 6) % 7;
-            const count = () => DUMMY_EVENTS.filter((e) => e.dayIndex === dayIdx()).length;
+            const count = () =>
+              allEvents().filter((e) => e.dayIndex === dayIdx()).length;
             return (
               <div
                 style={{
@@ -401,7 +634,6 @@ export default function CalendarPreview() {
           position: "relative",
           height: `${HOUR_HEIGHT * 10}px`,
           "scrollbar-width": "none",
-
         }}
       >
         <div
@@ -484,7 +716,8 @@ export default function CalendarPreview() {
             {(day, i) => {
               const dayIdx = () => (day.getDay() + 6) % 7; // 0=Mon
               const isWkend = () => day.getDay() === 0 || day.getDay() === 6;
-              const dayEvents = () => DUMMY_EVENTS.filter((e) => e.dayIndex === dayIdx());
+              const dayEvents = () =>
+                allEvents().filter((e) => e.dayIndex === dayIdx());
 
               return (
                 <div

@@ -14,7 +14,7 @@ export default function WaitlistForm() {
     const val = email().trim();
     if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
       setStatus("error");
-      setErrorMsg("enter a valid email");
+      setErrorMsg("Enter a valid email.");
       return;
     }
 
@@ -36,7 +36,7 @@ export default function WaitlistForm() {
       setStatus("success");
     } catch {
       setStatus("error");
-      setErrorMsg("something went wrong — try again");
+      setErrorMsg("Something went wrong — try again.");
     }
   };
 
@@ -46,7 +46,7 @@ export default function WaitlistForm() {
         when={status() !== "success"}
         fallback={
           <p class="text-[13px] uppercase tracking-[0.15em] text-dark/50">
-            you're on the list.
+            You're on the list.
           </p>
         }
       >
@@ -75,7 +75,7 @@ export default function WaitlistForm() {
             disabled={status() === "loading"}
             class="px-6 py-3 bg-dark text-bg text-base font-sans font-medium rounded-[4px] cursor-pointer disabled:opacity-50 transition-opacity hover:opacity-80"
           >
-            {status() === "loading" ? "joining..." : "join waitlist"}
+            {status() === "loading" ? "Joining..." : "Join waitlist"}
           </button>
         </form>
         <Show when={errorMsg()}>
