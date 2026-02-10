@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+/* Geist Sans — same font as the calendar app (used by CalendarPreview) */
+@import "@fontsource/geist-sans/400.css";
+@import "@fontsource/geist-sans/500.css";
+
 @font-face {
-  font-family: 'TASA Orbiter Display';
-  src: url('/fonts/TASAOrbiterDisplay-Medium.woff2') format('woff2');
+  font-family: "TASA Orbiter Display";
+  src: url("/fonts/TASAOrbiterDisplay-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -12,7 +16,6 @@
   --color-bg: #fcfcfc;
   --color-dark: #212020;
   --color-primary: #2d6b8a;
-  --font-sans: 'General Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'TASA Orbiter Display', 'General Sans', system-ui, sans-serif;
+  --font-sans: "General Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "TASA Orbiter Display", "General Sans", system-ui, sans-serif;
 }
-
