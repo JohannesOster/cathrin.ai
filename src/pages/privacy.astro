@@ -1,0 +1,120 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Privacy Policy — Cathrin">
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1 px-6 md:px-10 lg:px-16 py-16 md:py-24 max-w-2xl">
+      <h1 class="text-2xl font-medium">Privacy Policy</h1>
+
+      <div class="mt-8 space-y-8 text-dark/70 text-[15px] leading-relaxed">
+        <section>
+          <h2 class="font-medium text-dark">Controller</h2>
+          <p class="mt-2">
+            Johannes Oster<br />
+            Bendlgasse 31 Top 18<br />
+            1120 Wien, Österreich<br />
+            <a href="mailto:hey@cathrin.ai" class="underline hover:text-dark transition-colors">hey@cathrin.ai</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Overview</h2>
+          <p class="mt-2">
+            This policy explains how cathrin.ai handles your personal data. We do not use cookies or store any data on your device.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Waitlist (email)</h2>
+          <p class="mt-2">
+            When you join our waitlist, we collect your email address to notify you about Cathrin's launch and product updates. We will never sell or share your email with third parties.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Legal basis:</span> Your consent (Art. 6(1)(a) GDPR). You can withdraw consent at any time by unsubscribing or contacting us.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Processor:</span> <a href="https://loops.so" target="_blank" rel="noopener" class="underline hover:text-dark transition-colors">Loops</a> (Astrodon Corporation, USA) manages our mailing list. Your email is transferred to the United States on the basis of Standard Contractual Clauses (Art. 46(2)(c) GDPR). Loops acts as a data processor on our behalf.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Retention:</span> Until you unsubscribe or request deletion.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Analytics</h2>
+          <p class="mt-2">
+            We use <a href="https://posthog.com" target="_blank" rel="noopener" class="underline hover:text-dark transition-colors">PostHog</a> in cookieless mode for anonymous usage analytics (page views, device type, referrer). No cookies are set, no data is stored on your device, and no personal profiles are built.
+          </p>
+          <p class="mt-2">
+            PostHog computes a privacy-preserving, irreversible hash on its servers from your IP address and user agent. A daily rotating salt ensures this hash cannot be used to identify you. The salt is deleted once the day's events are processed. The resulting hash is not personal data.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Legal basis:</span> Legitimate interest (Art. 6(1)(f) GDPR) in understanding how our website is used. We have balanced this interest against your rights and concluded that cookieless, non-identifying analytics with no persistent tracking represents minimal intrusion.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Processor:</span> PostHog (EU servers). No data is transferred outside the EU/EEA.
+          </p>
+          <p class="mt-2">
+            <span class="text-dark">Retention:</span> Raw IP address and user agent are processed momentarily for hash computation and are not stored.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Hosting</h2>
+          <p class="mt-2">
+            This website is hosted by <a href="https://vercel.com" target="_blank" rel="noopener" class="underline hover:text-dark transition-colors">Vercel</a>. When you visit cathrin.ai, Vercel may process your IP address and technical connection data in server logs. Refer to <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener" class="underline hover:text-dark transition-colors">Vercel's privacy policy</a> for details.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Your rights</h2>
+          <p class="mt-2">
+            Under the GDPR, you have the right to:
+          </p>
+          <ul class="mt-2 list-disc list-inside space-y-1">
+            <li>Access your data (Art. 15)</li>
+            <li>Rectify inaccurate data (Art. 16)</li>
+            <li>Erase your data (Art. 17)</li>
+            <li>Restrict processing (Art. 18)</li>
+            <li>Data portability (Art. 20)</li>
+            <li>Object to processing (Art. 21)</li>
+            <li>Withdraw consent at any time (Art. 7(3))</li>
+          </ul>
+          <p class="mt-2">
+            To exercise any of these rights, contact <a href="mailto:hey@cathrin.ai" class="underline hover:text-dark transition-colors">hey@cathrin.ai</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Supervisory authority</h2>
+          <p class="mt-2">
+            You have the right to lodge a complaint with the Austrian data protection authority:<br />
+            Österreichische Datenschutzbehörde<br />
+            Barichgasse 40–42, 1030 Wien<br />
+            <a href="https://www.dsb.gv.at" target="_blank" rel="noopener" class="underline hover:text-dark transition-colors">dsb.gv.at</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-dark">Automated decision-making</h2>
+          <p class="mt-2">
+            We do not use automated decision-making or profiling.
+          </p>
+        </section>
+
+        <p class="text-[13px] text-dark/40">Last updated: February 2026</p>
+      </div>
+    </main>
+
+    <footer class="px-6 md:px-10 lg:px-16 py-5 border-t border-dark/10">
+      <div class="flex items-center justify-between text-[13px] text-dark/50">
+        <a href="/" class="hover:text-dark transition-colors">&copy; {new Date().getFullYear()} Cathrin</a>
+        <nav class="flex gap-4">
+          <a href="/imprint" class="hover:text-dark transition-colors">Imprint</a>
+          <a href="/privacy" class="text-dark">Privacy</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</Layout>
