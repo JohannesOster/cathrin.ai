@@ -287,7 +287,7 @@ export default function CalendarPreview() {
         </span>
       </div>
 
-      {/* Date header row — matches DateHeader.tsx */}
+      {/* Date header row — matches DateHeader.tsx (no column borders) */}
       <div
         style={{
           display: "flex",
@@ -301,11 +301,10 @@ export default function CalendarPreview() {
           style={{
             width: `${TIME_COL_WIDTH}px`,
             "min-width": `${TIME_COL_WIDTH}px`,
-            "border-right": `1px solid ${T.border}`,
           }}
         />
         <For each={days}>
-          {(day, i) => (
+          {(day) => (
             <div
               style={{
                 flex: "1",
@@ -313,12 +312,11 @@ export default function CalendarPreview() {
                 "align-items": "center",
                 "justify-content": "center",
                 gap: "4px",
-                "border-left": i() > 0 ? `1px solid ${T.border}` : "none",
               }}
             >
               <span
                 style={{
-                  "font-size": "13px", // text-xs
+                  "font-size": "13px",
                   color: isToday(day) ? T.today : T.fgMuted,
                 }}
               >
@@ -326,7 +324,7 @@ export default function CalendarPreview() {
               </span>
               <span
                 style={{
-                  "font-size": "13px", // text-xs
+                  "font-size": "13px",
                   "line-height": "1",
                   padding: isToday(day) ? "3px 6px" : "0",
                   "border-radius": "4px",
@@ -339,6 +337,55 @@ export default function CalendarPreview() {
               </span>
             </div>
           )}
+        </For>
+      </div>
+
+      {/* All-day row — matches AllDaySection.tsx (collapsed, 28px) */}
+      <div
+        style={{
+          display: "flex",
+          height: "28px",
+          "border-bottom": `1px solid ${T.border}`,
+          background: T.surface,
+        }}
+      >
+        {/* Toggle area — matches app: items-start justify-end pt-1 pr-2 */}
+        <div
+          style={{
+            width: `${TIME_COL_WIDTH}px`,
+            "min-width": `${TIME_COL_WIDTH}px`,
+            "border-right": `1px solid ${T.border}`,
+            display: "flex",
+            "align-items": "center",
+            "justify-content": "flex-end",
+            "padding-right": "8px",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={{ color: T.fgMuted }}>
+            <path d="m7 15 5 5 5-5" />
+            <path d="m7 9 5-5 5 5" />
+          </svg>
+        </div>
+        <For each={days}>
+          {(day, i) => {
+            const dayIdx = () => (day.getDay() + 6) % 7;
+            const count = () => DUMMY_EVENTS.filter((e) => e.dayIndex === dayIdx()).length;
+            return (
+              <div
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  "align-items": "center",
+                  "padding-left": "6px",
+                  "border-right": `1px solid ${T.border}`,
+                  "font-size": "10px",
+                  color: T.fgMuted,
+                }}
+              >
+                {count() > 0 ? `${count()} events` : ""}
+              </div>
+            );
+          }}
         </For>
       </div>
 
