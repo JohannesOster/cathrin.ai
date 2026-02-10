@@ -254,14 +254,21 @@ export default function CalendarPreview() {
     <div
       style={{
         background: T.surface,
-        "border-radius": "8px",
         overflow: "hidden",
         // Geist Sans — same font as the actual calendar app
         "font-family": "'Geist Sans', system-ui, -apple-system, sans-serif",
         color: T.fg,
-        border: `1px solid ${T.border}`,
-        "box-shadow": "0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)",
         "user-select": "none",
+        // Fade edges into the page background
+        border: `1px solid ${T.borderLight}`,
+        "border-radius": "8px",
+        "box-shadow": "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)",
+        "-webkit-mask-image":
+          "linear-gradient(to right, black, black 88%, transparent), linear-gradient(to bottom, black, black 90%, transparent)",
+        "mask-image":
+          "linear-gradient(to right, black, black 88%, transparent), linear-gradient(to bottom, black, black 90%, transparent)",
+        "-webkit-mask-composite": "source-in",
+        "mask-composite": "intersect",
       }}
     >
       {/* Month label row — matches CalendarGrid.tsx */}
