@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PostHogLayout from "../layouts/PostHogLayout.astro";
 import WaitlistForm from "../components/WaitlistForm.tsx";
 import CalendarPreview from "../components/CalendarPreview.tsx";
 
@@ -8,7 +7,6 @@ const now = new Date();
 const year = now.getFullYear();
 ---
 
-<PostHogLayout>
 <Layout title="Cathrin — Calendar for people who care">
   <div class="min-h-screen flex flex-col overflow-x-clip">
     <!-- Hero: text left, calendar right -->
@@ -23,7 +21,7 @@ const year = now.getFullYear();
           </h1>
 
           <p class="mt-6 text-lg text-dark/70 max-w-md">
-            We named it Cathrin and gave it a mascot <img src="/cathrin.gif" class="h-10 ml-px pb-2 inline-block" alt="Cathrin mascot"/>
+            And we gave it a mascot named Cathrin <img src="/cathrin.gif" class="h-10 ml-0.5 pb-2.5 inline-block" alt="Cathrin mascot"/>
           </p>
 
           <div class="mt-8">
@@ -129,4 +127,3 @@ const year = now.getFullYear();
     }
   </style>
 </Layout>
-</PostHogLayout>

@@ -124,7 +124,7 @@ const DUMMY_EVENTS: DummyEvent[] = [
     startHour: 10,
     startMin: 0,
     durationMin: 90,
-    title: "Meeting that could've been an email 🤦",
+    title: "Meeting that could've been an email",
     color: C.coral,
   },
   {
@@ -384,14 +384,20 @@ function EventChip(props: { event: DummyEvent; id: string }) {
             }}
           >
             {(() => {
-              const start = formatTime(props.event.startHour, props.event.startMin);
+              const start = formatTime(
+                props.event.startHour,
+                props.event.startMin,
+              );
               if (height() < SHORT_TIME_THRESHOLD) return start;
               const totalMin =
                 props.event.startHour * 60 +
                 props.event.startMin +
                 props.event.durationMin;
-              const end = formatTime(Math.floor(totalMin / 60) % 24, totalMin % 60);
-              return `${start} – ${end}`;
+              const end = formatTime(
+                Math.floor(totalMin / 60) % 24,
+                totalMin % 60,
+              );
+              return `${start} \u2013 ${end}`;
             })()}
           </div>
         </Show>
@@ -470,8 +476,8 @@ export default function CalendarPreview() {
     const lm = last.toLocaleDateString("en-US", { month: "long" });
     const fy = first.getFullYear();
     const ly = last.getFullYear();
-    if (fy !== ly) return `${fm} ${fy} – ${lm} ${ly}`;
-    if (fm !== lm) return `${fm} – ${lm} ${fy}`;
+    if (fy !== ly) return `${fm} ${fy} \u2013 ${lm} ${ly}`;
+    if (fm !== lm) return `${fm} \u2013 ${lm} ${fy}`;
     return `${fm} ${fy}`;
   };
 
