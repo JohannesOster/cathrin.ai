@@ -264,6 +264,7 @@ const DUMMY_EVENTS: DummyEvent[] = [
 
 // ─── Selection state (one event at a time, like the real app) ───────────────
 const [selectedId, setSelectedId] = createSignal<string | null>(null);
+let calendarInteracted = false;
 
 // ─── Event chip (matches CalendarEvent.tsx styling + hover/select from App.css)
 function EventChip(props: { event: DummyEvent; id: string }) {
@@ -325,6 +326,10 @@ function EventChip(props: { event: DummyEvent; id: string }) {
       onMouseLeave={() => setHovered(false)}
       onClick={(e) => {
         e.stopPropagation();
+        if (!calendarInteracted) {
+          calendarInteracted = true;
+          window.posthog?.capture("calendar_interaction");
+        }
         setSelectedId((prev) => (prev === props.id ? null : props.id));
       }}
     >

@@ -19,6 +19,7 @@ export default function WaitlistForm() {
     }
 
     setStatus("loading");
+    window.posthog?.capture("waitlist_form_submitted");
 
     try {
       // TODO: Replace with Loops API endpoint
@@ -34,9 +35,11 @@ export default function WaitlistForm() {
 
       await new Promise((resolve) => setTimeout(resolve, 600));
       setStatus("success");
+      window.posthog?.capture("waitlist_signup_success");
     } catch {
       setStatus("error");
       setErrorMsg("Something went wrong — try again.");
+      window.posthog?.capture("waitlist_signup_error");
     }
   };
 

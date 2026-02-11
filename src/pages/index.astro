@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PostHogLayout from "../layouts/PostHogLayout.astro";
 import WaitlistForm from "../components/WaitlistForm.tsx";
 import CalendarPreview from "../components/CalendarPreview.tsx";
 
@@ -7,6 +8,7 @@ const now = new Date();
 const year = now.getFullYear();
 ---
 
+<PostHogLayout>
 <Layout title="Cathrin — Calendar for people who care">
   <div class="min-h-screen flex flex-col overflow-x-clip">
     <!-- Hero: text left, calendar right -->
@@ -127,3 +129,4 @@ const year = now.getFullYear();
     }
   </style>
 </Layout>
+</PostHogLayout>
