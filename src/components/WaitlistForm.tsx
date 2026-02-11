@@ -1,5 +1,7 @@
 import { createSignal, Show } from "solid-js";
 
+const LOOPS_FORM_ID = "cmlguyrpz1nzg0i20h931rewc";
+
 export default function WaitlistForm() {
   const [email, setEmail] = createSignal("");
   const [status, setStatus] = createSignal<
@@ -19,24 +21,24 @@ export default function WaitlistForm() {
     }
 
     setStatus("loading");
+    window.posthog?.capture("waitlist_form_submitted");
 
     try {
-      // TODO: Replace with Loops API endpoint
-      // const res = await fetch("https://app.loops.so/api/v1/contacts/create", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: "Bearer YOUR_LOOPS_API_KEY",
-      //   },
-      //   body: JSON.stringify({ email: val, source: "waitlist", subscribed: true }),
-      // });
-      // if (!res.ok) throw new Error("Failed to subscribe");
-
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const res = await fetch(
+        `https://app.loops.so/api/newsletter-form/${LOOPS_FORM_ID}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `email=${encodeURIComponent(val)}&mailingLists=&userGroup=`,
+        },
+      );
+      if (!res.ok) throw new Error("Failed to subscribe");
       setStatus("success");
+      window.posthog?.capture("waitlist_signup_success");
     } catch {
       setStatus("error");
       setErrorMsg("Something went wrong — try again.");
+      window.posthog?.capture("waitlist_signup_error");
     }
   };
 
