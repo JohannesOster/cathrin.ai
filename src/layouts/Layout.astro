@@ -33,12 +33,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content={new URL("/og-image.png", Astro.site)} />
     <meta name="generator" content={Astro.generator} />
 
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-    <link
-      href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap"
-      rel="stylesheet"
-    />
-
     <title>{title}</title>
   </head>
   <body class="bg-bg text-dark font-sans antialiased">
