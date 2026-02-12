@@ -1,10 +1,11 @@
-# CLAUDE.md
+# Landing Page — cathrin.ai
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+For brand and product context see @../../.claude/refs/identity.md
+For design tokens see @../../.claude/refs/tokens.md
 
-## What This Is
+## Tech Stack
 
-Waitlist landing page for Cathrin.ai — a premium desktop calendar app. Built as a static site with selective client-side hydration for interactive components.
+**Astro 5 + Solid.js + Tailwind v4**
 
 ## Commands
 
@@ -15,16 +16,14 @@ pnpm build            # Production build → dist/
 pnpm preview          # Preview production build locally
 ```
 
-No test runner or linter is configured. TypeScript checking is handled by Astro's compilation.
+No test runner or linter configured. TypeScript checking via Astro's compilation.
 
 ## Architecture
 
-**Astro 5 + Solid.js + Tailwind v4**
-
-- **Astro pages** (`src/pages/`) are server-rendered static HTML. Routing is file-based.
-- **Solid.js components** (`src/components/`) are interactive islands hydrated client-side via `client:load`. Solid was chosen over React for fine-grained reactivity without virtual DOM overhead.
-- **Tailwind v4** uses the Vite plugin (`@tailwindcss/vite`), not PostCSS. Theme tokens are defined in `src/styles/global.css` under `@theme`.
-- **Layout.astro** (`src/layouts/`) is the base HTML shell — fonts, meta tags, and slot-based page composition.
+- **Astro pages** (`src/pages/`) — server-rendered static HTML, file-based routing
+- **Solid.js components** (`src/components/`) — interactive islands via `client:load`
+- **Tailwind v4** — uses Vite plugin (`@tailwindcss/vite`), theme tokens in `src/styles/global.css` under `@theme`
+- **Layout.astro** (`src/layouts/`) — base HTML shell with fonts, meta tags, slot-based composition
 
 ### Key Files
 
@@ -36,18 +35,9 @@ No test runner or linter is configured. TypeScript checking is handled by Astro'
 | `src/styles/global.css` | Tailwind theme tokens, custom fonts, global styles |
 | `astro.config.mjs` | Astro config with Solid.js and Tailwind integrations |
 
-### Design Tokens
-
-Theme colors and fonts are defined in `src/styles/global.css`:
-- `--color-bg: #fcfcfc`, `--color-dark: #212020`, `--color-primary: #2d6b8a`
-- `--font-sans`: General Sans (Fontshare CDN)
-- `--font-display`: TASA Orbiter Display (local WOFF2 in `public/fonts/`)
-
-CalendarPreview has its own hardcoded color palette (Cathrin colors: graphite, coral, teal, sage, etc.) and grid constants (`HOUR_HEIGHT = 52`, `TIME_COL_WIDTH = 64`) that match the main calendar app's design.
-
 ### Patterns
 
-- Solid.js state uses `createSignal` / `createEffect` for local reactivity
+- Solid.js state: `createSignal` / `createEffect` for local reactivity
 - Responsive typography via `clamp()` (e.g., `text-[clamp(2.5rem,5vw,5rem)]`)
-- Calendar event positioning is done with inline styles computed from time values
-- Waitlist API (Loops.io) is stubbed — ready for API key via `.env`
+- Calendar event positioning via inline styles computed from time values
+- Waitlist API (Loops.io) stubbed — ready for API key via `.env`

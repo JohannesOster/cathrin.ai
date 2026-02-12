@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
-/* Geist Sans — same font as the calendar app (used by CalendarPreview) */
+/* Geist Sans — same font as the calendar app */
 @import "@fontsource/geist-sans/400.css";
 @import "@fontsource/geist-sans/500.css";
+@import "@fontsource/geist-sans/600.css";
 
 @theme {
   --color-bg: #fcfcfc;
   --color-dark: #212020;
   --color-primary: #2d6b8a;
-  --font-sans: "General Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "Geist Sans", system-ui, -apple-system, sans-serif;
 }
