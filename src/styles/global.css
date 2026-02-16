@@ -5,9 +5,15 @@
 @import "@fontsource/geist-sans/500.css";
 @import "@fontsource/geist-sans/600.css";
 
+/* Atkinson Hyperlegible Mono — headline font */
+@import "@fontsource/atkinson-hyperlegible-mono/400.css";
+@import "@fontsource/atkinson-hyperlegible-mono/500.css";
+@import "@fontsource/atkinson-hyperlegible-mono/600.css";
+
 @theme {
   --color-bg: #fcfcfc;
   --color-dark: #212020;
-  --color-primary: #2d6b8a;
+  --color-primary: #212020;
   --font-sans: "Geist Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
 }
