@@ -31,8 +31,8 @@ const T = {
   fgMuted: "#717070",
   border: "#e0dfdf",
   borderLight: "#ebeaea",
-  today: "#2d6b8a",
-  todayTint: "rgba(45, 107, 138, 0.025)",
+  today: "#212020",
+  todayTint: "rgba(33, 32, 32, 0.025)",
 };
 
 // ─── Date helpers ───────────────────────────────────────────────────────────
